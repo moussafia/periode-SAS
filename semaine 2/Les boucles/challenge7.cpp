@@ -6,7 +6,7 @@ int n,i;
 int U0,U1,U;
 printf("donner le nombre n : ");
 scanf("%d",&n);
-U0=1;
+U0=0;
 U1=1;
 i=2;
 while ((i>1) && (i<=n))
