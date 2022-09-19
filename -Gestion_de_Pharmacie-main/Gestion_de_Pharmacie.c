@@ -4,6 +4,10 @@
 #include <time.h>
 
 int numTotal=0;
+int max=0;
+int ptv=0;
+int min;
+int nmb=0;
 
 //Structures Section
 struct produit{
@@ -114,6 +118,10 @@ void acheterProduit(struct produit p[100]){
            printf("\n          %s",ctime(&currenttime));
            printf("\ncode: %s  nom: %s   quantite: %d   prix: %.2f DH \n",p[i].code,p[i].nom,p[i].quantite,p[i].prix);
           L=0;
+          ptv+=k;
+          nmb=N;
+          if(max<k) max=k;
+          if(min>k) min=k;
           break;
 
       }
@@ -229,7 +237,10 @@ void SupprimerProduits(struct produit p[100])
         if (L==1)
         printf("Le code N'existe pas dans la liste des produit");
 }
-
+void StatistiqueVente(struct produit p[100])
+{
+    printf("Afficher le total des prix des produits vendus en journée courante")
+}
 int main()
 {struct produit p[100];
 
