@@ -4,9 +4,9 @@
 #include <time.h>
 
 int numTotal=0;
-int max=0;
-int ptv=0;
-int min;
+float max=0;
+float ptv=0;
+float min;
 int nmb=0;
 
 //Structures Section
@@ -41,7 +41,7 @@ void ajouterProduits(struct produit p[100]){
 
     }
     numTotal+=N;
-
+    min=p[0].prix;
 }
 //afficherPoduit
 void afficherProduits(struct produit p[100]){
@@ -119,7 +119,7 @@ void acheterProduit(struct produit p[100]){
            printf("\ncode: %s  nom: %s   quantite: %d   prix: %.2f DH \n",p[i].code,p[i].nom,p[i].quantite,p[i].prix);
           L=0;
           ptv+=k;
-          nmb=N;
+          nmb+=N;
           if(max<k) max=k;
           if(min>k) min=k;
           break;
@@ -239,7 +239,10 @@ void SupprimerProduits(struct produit p[100])
 }
 void StatistiqueVente(struct produit p[100])
 {
-    printf("Afficher le total des prix des produits vendus en journée courante")
+    printf("\nle total des prix des produits vendus en journée courante:\t%f DH",ptv);
+    printf("\nla moyenne des prix des produits vendus en journée courante:\t%f DH",ptv/nmb);
+    printf("\nle Max des prix des produits vendus en journée courante:\t%f DH",max);
+    printf("\nAfficher le Min des prix des produits vendus en journée courante:\t%f DH",min);
 }
 int main()
 {struct produit p[100];
