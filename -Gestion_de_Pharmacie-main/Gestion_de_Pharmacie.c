@@ -3,26 +3,93 @@
 #include <string.h>
 #include <time.h>
 
-int numTotal=0;
-float max=0;
-float ptv=0;
+int numTotal=0;//numero des produit  total existant
+float max=0; // Max des prix des produits vendus en journée courante
+float ptv=0; //prix des produit total vendue
 float min;
-int nmb=0;
+int nmb=0; //le nombre des produits vendue
 
-//Structures Section
+//Section des Structures
 struct produit{
     char nom[30],code[30];
     int quantite;
     float prix;
-    char temp[30];
+    char temp[30]; //temps d'achat
 
 };
+void ajouterProduits(struct produit p[100]);
+void afficherProduits(struct produit p[100]);
+void orderAlpha(struct produit p[100]);
+void orderPrix(struct produit p[100]);
+void triage_du_liste(struct produit p[100]);
+void acheterProduit(struct produit p[100]);
+void Rechercher_les_produits_code(struct produit p[100]);
+void Rechercher_les_produits_quantite(struct produit p[100]);
+void recherche_les_produits(struct produit p[100]);
+void Etat_du_stock(struct produit p[100]);
+void AlimenterStock(struct produit p[100]);
+void SupprimerProduits(struct produit p[100]);
+void StatistiqueVente(struct produit p[100]);
+
+int main()
+{struct produit p[100];
 
 
-//Fonction ajouter
+
+     int N=0,OP;
+    do{
+        printf("\n\t\t       Menu Principal  :\n\n");
+        printf("\t1-Ajouter un ou plusieurs nouveau produit \n");
+        printf("\t2-Afficher Les Produits \n");
+        printf("\t3-Lister tous les produits (Nom, prix, prix TTC)\n");
+        printf("\t4-Acheter produit \n");
+        printf("\t5-Rechercher les produits\n");
+        printf("\t6-Etat du stock \n");
+        printf("\t7-Alimenter le stock  \n");
+        printf("\t8-Supprimer les produits  \n");
+        printf("\t9-Statistique de vente  \n");
+        printf("\t10-Quitter De Programme\n");
+        scanf("%d",&OP);
+
+
+        switch(OP){
+            case 1:
+                ajouterProduits(p);
+                break;
+            case 2:
+                afficherProduits(p);
+                break;
+            case 3:
+                triage_du_liste(p);
+                break;
+            case 4:
+                acheterProduit(p);
+                break;
+            case 5:recherche_les_produits(p);
+                break;
+            case 6: Etat_du_stock(p);
+                 break;
+            case 7: AlimenterStock(p);
+                 break;
+            case 8: SupprimerProduits(p);
+                 break;
+            case 9: StatistiqueVente(p);
+                 break;
+            case 10: printf("By by\n");
+                break;
+            default:
+                break;
+        }
+
+    }while(OP !=10);
+
+ return 0;
+}
+//Fonction ajouter nouveau produit
 void ajouterProduits(struct produit p[100]){
 
     int N;
+    char cod[50];
 
     printf("Combien de produits souhaitez-vous saisir ?: ");
     scanf("%d",&N);
@@ -36,6 +103,7 @@ void ajouterProduits(struct produit p[100]){
         scanf("%d",&p[i].quantite);
         printf("    Donnez Le Prix Produit: ");
         scanf("%f",&p[i].prix);
+        p[i].prix*=p[i].quantite; //somme des prix
         p[i].prix += 0.15 * p[i].prix; // TTC =prix+15%*prix
         strcpy(p[i].temp,"0");
 
@@ -138,10 +206,10 @@ void acheterProduit(struct produit p[100]){
 }
 //fonction de recherhe du produit par code
 void Rechercher_les_produits_code(struct produit p[100])
-{char cod[30];
-    printf("\n\tdonner le code : ");
-    scanf("%s",&cod);
-
+{
+char cod[50];
+        printf("donner le code de produit :");
+        scanf("%s",cod);
     for(int i=0;i<numTotal;i++)
     {
         if (strcmp(cod,p[i].code)==0)
@@ -165,21 +233,20 @@ void Rechercher_les_produits_code(struct produit p[100])
     void recherche_les_produits(struct produit p[100]){int n;
         printf("\n  1-Rechercher les produits Par : Code");
         printf("\n  2-Rechercher les produits Par : Quantité.\n");
-        printf("\n  3-Etat du stock: permet d’afficher les produits dont la quantité est inférieure à 3.\n");
         scanf("%d",&n);
         system("cls");
     switch(n)
-{   case 1: Rechercher_les_produits_code(p);
+{   case 1:
+        Rechercher_les_produits_code(p);
         break;
     case 2: Rechercher_les_produits_quantite(p);
-        break ;
-    case 3: Etat_du_stock(p);
         break ;
     default:
         break;
 }}
 
 void Etat_du_stock(struct produit p[100]){
+    printf("\n\tEtat du stock: permet d’afficher les produits dont la quantité est inférieure à 3.\n");
 
     for(int i=0;i<numTotal;i++)
     {
@@ -243,48 +310,4 @@ void StatistiqueVente(struct produit p[100])
     printf("\nla moyenne des prix des produits vendus en journée courante:\t%f DH",ptv/nmb);
     printf("\nle Max des prix des produits vendus en journée courante:\t%f DH",max);
     printf("\nAfficher le Min des prix des produits vendus en journée courante:\t%f DH",min);
-}
-int main()
-{struct produit p[100];
-
-
-
-     int N=0,OP;
-    do{
-        printf("\n\t   Menu:\n\n");
-        printf("    1-Ajouter un ou plusieurs nouveau produit\n");
-        printf("    2-Modifier Un Produit\n");
-        printf("    3-Supprimer Un Produit\n");
-        printf("    4-Afficher Les Produits\n");
-        printf("    5-Lister tous les produits (Nom, prix, prix TTC):\n");
-        printf("    6-le produit Achete : \n");
-        printf("    10-Quitter De Programme\n");
-        scanf("%d",&OP);
-
-
-        switch(OP){
-            case 1:
-                ajouterProduits(p);
-                break;
-            case 2:
-                break;
-            case 3:
-                break;
-            case 4:
-                afficherProduits(p);
-                break;
-            case 5:triage_du_liste(p);
-                break;
-            case 6: acheterProduit(p);
-                 break;
-            case 10: printf("By by\n");
-
-                break;
-            default:
-                break;
-        }
-
-    }while(OP !=10);
-
- return 0;
 }
